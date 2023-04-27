@@ -1,4 +1,4 @@
-import { FormEvent } from "react"
+import { FormEvent, useEffect } from "react"
 
 export default function Login() {
 
@@ -6,16 +6,10 @@ export default function Login() {
         ev.preventDefault()
 
         const form = new FormData(ev.target as HTMLFormElement)
-        const host = process.env.NEXT_PUBLIC_API_URL;
+        
 
-        const config = {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json"
-            }
-        }
         try {
-            await fetch(`${host}/auth/login`, config)
+            await fetch(`${host}/auth/login`)
         } catch (err) {
             console.log(err)
         }
