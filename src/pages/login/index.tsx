@@ -1,22 +1,29 @@
 import { FormEvent, useEffect } from "react"
+import  HTTPClient  from "@/httpClient"
+import Progress from "@/components/Progress"
 
 export default function Login() {
+    const isAnimating = useAppSelector(state => state.loader.isAnimating)
+    const key = useAppSelector(state => state.loader.key)
+    const dispatch = useAppDispatch()
 
     const handleLogin = async (ev: FormEvent) => {
         ev.preventDefault()
 
         const form = new FormData(ev.target as HTMLFormElement)
         
-
         try {
-            await fetch(`${host}/auth/login`)
+            const res = await HTTPClient.post('/auth/login', {
+                mobile: form.get('phone')
+            })
+            console.log(res)
         } catch (err) {
             console.log(err)
         }
     }
 
     return <div className="pt-16">
-       
+       <Progress isAnimating={isAnimating} key={key} />
         <h1 className="text-3xl font-semibold mb-4">
             Enter your phone number
         </h1>

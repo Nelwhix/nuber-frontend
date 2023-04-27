@@ -1,4 +1,4 @@
-export class HTTPClient {
+export default class HTTPClient {
     static async post(url = "", data = {}) {
         const host = process.env.NEXT_PUBLIC_API_URL;
 
