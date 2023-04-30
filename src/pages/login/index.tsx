@@ -1,6 +1,8 @@
 import { FormEvent, useEffect } from "react"
 import  HTTPClient  from "@/httpClient"
 import Progress from "@/components/Progress"
+import { useAppSelector, useAppDispatch } from "@/hooks"
+import { start, stop } from "@/stores"
 
 export default function Login() {
     const isAnimating = useAppSelector(state => state.loader.isAnimating)
@@ -9,6 +11,7 @@ export default function Login() {
 
     const handleLogin = async (ev: FormEvent) => {
         ev.preventDefault()
+        dispatch(start())
 
         const form = new FormData(ev.target as HTMLFormElement)
         
@@ -17,8 +20,10 @@ export default function Login() {
                 mobile: form.get('phone')
             })
             console.log(res)
+            dispatch(stop())
         } catch (err) {
             console.log(err)
+            dispatch(stop())
         }
     }
 
