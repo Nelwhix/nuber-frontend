@@ -3,7 +3,7 @@
 export default function Bar({ animationDuration, progress }: BarProps) {
 
     const BarStyle = {
-        background: '#29d',
+        background: '#000000',
         height: 2,
         left: 0,
         marginLeft: `${(-1 + progress) * 100}%`,

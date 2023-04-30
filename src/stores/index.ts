@@ -1,6 +1,8 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit';
+import { createWrapper, HYDRATE } from 'next-redux-wrapper'
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-const loaderSlice = createSlice({
+export const loaderSlice = createSlice({
     name: 'loader',
     initialState: {
         isAnimating: false,
@@ -15,16 +17,29 @@ const loaderSlice = createSlice({
             state.isAnimating = false;
             state.key = 0;
         }
+    },
+    extraReducers: {
+        [HYDRATE]: (state) => {
+          return {
+            ...state,
+          };
+        },
     }
 })
 
 export const { start, stop } = loaderSlice.actions
 
-export const store = configureStore({
+export const makeStore = () => configureStore({
   reducer: {
-    loader: loaderSlice.reducer
-  }  
+    [loaderSlice.name]: loaderSlice.reducer
+  },
+  devTools: true  
 })
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
+export const useAppDispatch = () => useDispatch<AppDispatch>();
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+export const wrapper = createWrapper<AppStore>(makeStore);
+

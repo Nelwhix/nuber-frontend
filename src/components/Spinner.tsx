@@ -13,10 +13,10 @@ export default function Spinner() {
       style={{
         animation: '400ms linear infinite spinner',
         borderBottom: '2px solid transparent',
-        borderLeft: '2px solid #29d',
+        borderLeft: '2px solid #000000',
         borderRadius: '50%',
         borderRight: '2px solid transparent',
-        borderTop: '2px solid #29d',
+        borderTop: '2px solid #000000',
         boxSizing: 'border-box',
         height: 18,
         width: 18,

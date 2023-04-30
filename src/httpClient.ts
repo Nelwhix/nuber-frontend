@@ -10,6 +10,10 @@ export default class HTTPClient {
             },
             body: JSON.stringify(data)
         });
+        if (!res.ok) {
+            const data = await res.json()
+            throw new Error(`{"message": "${data.message}","code": ${res.status}}`)
+        }
 
         return res.json()
     }
