@@ -1,7 +1,6 @@
-import { useState, KeyboardEvent, useRef } from "react";
+import { KeyboardEvent, useRef } from "react";
 
-export default function OTPinput() {
-    const [digits, setDigits] = useState(Array(6).fill(""))
+export default function OTPinput({ digits, setDigits }: OTPinputProps) {  
     const otpContainer = useRef(null)
 
     const handleKeyDown = (ev: KeyboardEvent, i: number) => {
@@ -41,7 +40,7 @@ export default function OTPinput() {
             className="mx-3 border border-gray-300 focus:outline focus:outline-gray-500 text-center text-xl rounded-md w-20 h-20"
             type="text"
             maxLength={1} 
-            value={digits[i]}
+            defaultValue={digit}
         />
       );
 
@@ -50,4 +49,9 @@ export default function OTPinput() {
             {otpInput}
             </div>
         </div>;
+}
+
+interface OTPinputProps {
+    digits: Array<string>
+    setDigits: any
 }

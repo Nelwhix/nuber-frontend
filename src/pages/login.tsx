@@ -1,13 +1,13 @@
 import { FormEvent, useState } from "react"
 import HTTPClient from "@/httpClient"
 import Progress from "@/components/Progress"
-import { start, stop, useAppSelector, useAppDispatch } from "@/stores"
+import { start, stop, useAppSelector, useAppDispatch, setMobile } from "@/stores"
 import ValidationError from "@/components/ValidationError"
 import { useRouter } from 'next/router'
 
 export default function Login() {
-    const isAnimating = useAppSelector(state => state.loader.isAnimating)
-    const key = useAppSelector(state => state.loader.key)
+    const isAnimating = useAppSelector(state => state.appStore.isAnimating)
+    const key = useAppSelector(state => state.appStore.key)
     const dispatch = useAppDispatch()
     const [ showValidationErr, setShowValidationErr ] = useState(false)
     const [ validationMsg, setValidationMsg ] = useState("")
@@ -24,6 +24,7 @@ export default function Login() {
                 mobile: form.get('phone')
             })
             dispatch(stop())
+            dispatch(setMobile(form.get('phone')))
             router.push('/verify')
         } catch (err) {
             dispatch(stop())

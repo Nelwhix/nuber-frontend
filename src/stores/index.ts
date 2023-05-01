@@ -2,11 +2,12 @@ import { createSlice, configureStore } from '@reduxjs/toolkit';
 import { createWrapper, HYDRATE } from 'next-redux-wrapper'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
-export const loaderSlice = createSlice({
-    name: 'loader',
+export const appSlice = createSlice({
+    name: 'appStore',
     initialState: {
         isAnimating: false,
-        key: 0
+        key: 0,
+        mobile: ""
     },
     reducers: {
         start(state) {
@@ -16,6 +17,9 @@ export const loaderSlice = createSlice({
         stop(state) {
             state.isAnimating = false;
             state.key = 0;
+        },
+        setMobile(state, action) {
+            state.mobile = action.payload
         }
     },
     extraReducers: {
@@ -27,11 +31,11 @@ export const loaderSlice = createSlice({
     }
 })
 
-export const { start, stop } = loaderSlice.actions
+export const { start, stop, setMobile } = appSlice.actions
 
 export const makeStore = () => configureStore({
   reducer: {
-    [loaderSlice.name]: loaderSlice.reducer
+    [appSlice.name]: appSlice.reducer
   },
   devTools: true  
 })
