@@ -1,7 +1,7 @@
 import { KeyboardEvent, useRef } from "react";
 
 export default function OTPinput({ digits, setDigits }: OTPinputProps) {  
-    const otpContainer = useRef(null)
+    const otpContainer = useRef<HTMLDivElement | null>(null)
 
     const handleKeyDown = (ev: KeyboardEvent, i: number) => {
         if (ev.key !== "Tab" &&

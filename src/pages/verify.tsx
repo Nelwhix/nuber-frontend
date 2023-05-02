@@ -5,6 +5,7 @@ import { FormEvent, useState } from "react";
 import HTTPClient from "@/httpClient";
 import { useRouter } from "next/router";
 import ValidationError from "@/components/ValidationError";
+import Default from "@/layouts/Default";
 
 export default function Verify() {
     const [digits, setDigits] = useState(Array(6).fill(""))
@@ -15,6 +16,10 @@ export default function Verify() {
     const router = useRouter()
     const [ showValidationErr, setShowValidationErr ] = useState(false)
     const [ validationMsg, setValidationMsg ] = useState("")
+
+    if (mobile.length === 0) {
+        router.push('/login')
+    }
 
     const verifyOTP = async (ev: FormEvent) => {
         ev.preventDefault()
@@ -47,8 +52,7 @@ export default function Verify() {
         
     }
 
-    return <div className="pt-16">
-        <Progress isAnimating={isAnimating} key={key} />
+    return <Default>
         <h1 className="text-3xl font-semibold mb-4">
             Verify OTP
         </h1>
@@ -65,6 +69,5 @@ export default function Verify() {
                 Verify
             </button>
         </form>
-
-    </div>
+    </Default>
 }

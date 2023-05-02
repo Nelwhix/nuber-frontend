@@ -1,17 +1,18 @@
 import { FormEvent, useState } from "react"
 import HTTPClient from "@/httpClient"
-import Progress from "@/components/Progress"
-import { start, stop, useAppSelector, useAppDispatch, setMobile } from "@/stores"
+import { start, stop, useAppDispatch, setMobile } from "@/stores"
 import ValidationError from "@/components/ValidationError"
 import { useRouter } from 'next/router'
+import Default from "@/layouts/Default"
 
 export default function Login() {
-    const isAnimating = useAppSelector(state => state.appStore.isAnimating)
-    const key = useAppSelector(state => state.appStore.key)
+    const router = useRouter()
+   
+
     const dispatch = useAppDispatch()
     const [ showValidationErr, setShowValidationErr ] = useState(false)
     const [ validationMsg, setValidationMsg ] = useState("")
-    const router = useRouter()
+    
 
     const handleLogin = async (ev: FormEvent) => {
         ev.preventDefault()
@@ -39,9 +40,8 @@ export default function Login() {
         }
     }
 
-    return <div className="pt-16">
-        <Progress isAnimating={isAnimating} key={key} />
-        <h1 className="text-3xl font-semibold mb-4">
+    return <Default>
+         <h1 className="text-3xl font-semibold mb-4">
             Enter your phone number
         </h1>
 
@@ -70,5 +70,5 @@ export default function Login() {
                 </div>
             </div>
         </form>
-    </div>
+    </Default>     
 }
