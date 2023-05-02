@@ -2,6 +2,7 @@ import HTTPClient from "@/httpClient";
 import Default from "@/layouts/Default";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
     const router = useRouter()
@@ -13,6 +14,7 @@ export default function Home() {
             router.push('/login')
         }
     }
+
 
     useEffect(() => {
         getUser()
@@ -26,12 +28,13 @@ export default function Home() {
             >
                 Start Driving
             </button>
-
-            <button
+ 
+            <Link
+                href="/location"
                 className="text-white inline-flex justify-center rounded-md border border-transparent bg-black py-2 px-3"
             >
                 Find A Ride
-            </button>
+            </Link>
         </div>
     </Default>
 }

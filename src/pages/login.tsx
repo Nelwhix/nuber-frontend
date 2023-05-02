@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import HTTPClient from "@/httpClient"
 import { start, stop, useAppDispatch, setMobile } from "@/stores"
 import ValidationError from "@/components/ValidationError"
@@ -11,6 +11,19 @@ export default function Login() {
     const [ showValidationErr, setShowValidationErr ] = useState(false)
     const [ validationMsg, setValidationMsg ] = useState("")
     
+
+    const getUser = async () => {
+        try {
+            await HTTPClient.$get('/user')
+            router.push('/')
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        getUser()
+    }, [])
 
     const handleLogin = async (ev: FormEvent) => {
         ev.preventDefault()
@@ -26,9 +39,7 @@ export default function Login() {
             dispatch(setMobile(form.get('phone')))
             router.push('/verify')
         } catch (err) {
-            console.log(err)
             dispatch(stop())
-            return
             setShowValidationErr(true)
             // const msg = JSON.parse(err.message)
             setValidationMsg(msg.message)

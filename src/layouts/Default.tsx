@@ -12,5 +12,5 @@ export default function Default({ children }: LayoutProps) {
 }
 
 interface LayoutProps {
-    children: Array<JSX.Element>
+    children: React.ReactNode
 }
