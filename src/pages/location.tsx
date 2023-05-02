@@ -1,6 +1,14 @@
 import Default from "@/layouts/Default";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+
+const ClientSearch = dynamic(() => import('../components/AddressSearch'), {
+    loading: () => <p>Loading...</p>,
+    ssr: false
+  })
 
 export default function Location() {
+    const [address, setAddress] = useState("")
 
     return <Default>
         <h1 className="text-3xl font-semibold mb-4">
@@ -10,11 +18,7 @@ export default function Location() {
             <div className="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div className="bg-white px-4 py-5 sm:p-6">
                     <div>
-                        <input
-                            type="text"
-                            placeholder="My destination"
-                            className="mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm"
-                        />
+                        <ClientSearch address={address} setAddress={setAddress} />
                     </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
