@@ -7,8 +7,6 @@ import Default from "@/layouts/Default"
 
 export default function Login() {
     const router = useRouter()
-   
-
     const dispatch = useAppDispatch()
     const [ showValidationErr, setShowValidationErr ] = useState(false)
     const [ validationMsg, setValidationMsg ] = useState("")
@@ -28,9 +26,11 @@ export default function Login() {
             dispatch(setMobile(form.get('phone')))
             router.push('/verify')
         } catch (err) {
+            console.log(err)
             dispatch(stop())
+            return
             setShowValidationErr(true)
-            const msg = JSON.parse(err.message)
+            // const msg = JSON.parse(err.message)
             setValidationMsg(msg.message)
 
             setTimeout(() => {

@@ -1,5 +1,4 @@
 import OTPinput from "@/components/OTPinput";
-import Progress from "@/components/Progress";
 import { useAppSelector, useAppDispatch, start, stop, } from "@/stores";
 import { FormEvent, useState } from "react";
 import HTTPClient from "@/httpClient";
@@ -9,17 +8,11 @@ import Default from "@/layouts/Default";
 
 export default function Verify() {
     const [digits, setDigits] = useState(Array(6).fill(""))
-    const isAnimating = useAppSelector(state => state.appStore.isAnimating)
-    const key = useAppSelector(state => state.appStore.key)
     const dispatch = useAppDispatch()
     const mobile = useAppSelector(state => state.appStore.mobile)
     const router = useRouter()
     const [ showValidationErr, setShowValidationErr ] = useState(false)
     const [ validationMsg, setValidationMsg ] = useState("")
-
-    if (mobile.length === 0) {
-        router.push('/login')
-    }
 
     const verifyOTP = async (ev: FormEvent) => {
         ev.preventDefault()

@@ -1,15 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-    console.log(req.url)
-    // switch (req.url) {
-    //     case '/login':
-    //         if (localStorage.getItem('nuber_token')) {
-    //             return NextResponse.redirect(new URL('/', req.url))
-    //         }
-    // }
-}
-
-export const config = {
-    matcher: '/'
+//    switch (req.nextUrl.pathname) {
+//         case '/':
+//             if (localStorage.getItem('nuber_token')) {
+//                 return NextResponse.redirect(new URL('/login', req.url))
+//             }
+//             break
+//         default:
+//             break;
+//    }
 }

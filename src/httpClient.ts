@@ -17,4 +17,22 @@ export default class HTTPClient {
 
         return res.json()
     }
+
+    static async $get(url = "") {
+        const host = process.env.NEXT_PUBLIC_API_URL;
+
+        const res = await fetch(`${host + url}`, {
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "application/json",
+                "Authorization": `Bearer ${localStorage.getItem('nuber_token')}`
+            },
+        });
+        if (!res.ok) {
+            const data = await res.json()
+            throw new Error(`{"message": "${data.message}","code": ${res.status}}`)
+        }
+
+        return res.json()
+    }
 }
