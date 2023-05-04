@@ -2,14 +2,30 @@ import PlacesAutocomplete, {
     geocodeByAddress,
     getLatLng,
   } from 'react-places-autocomplete';
+import { useAppSelector, useAppDispatch, setDestination } from '@/stores';
+import { useState } from 'react';
 
-export default function AddressSearch({ address, setAddress }: AddressSearchProps) {
+export default function AddressSearch() {
+    const [name, setName] = useState("")
+    const address = useAppSelector(state => state.appStore.destination.address)
+    const dispatch = useAppDispatch()
+
+   const handleChange = (value: string) => {
+        setName(value)
+   }
 
     const fetchCoordinates = async (address: string) => {
         try {
             const results = await geocodeByAddress(address)
             const latLng = await getLatLng(results[0])
-            console.log(latLng)
+            dispatch(setDestination({
+                name: name,
+                address: results[0].formatted_address,
+                geometry: {
+                    lat: latLng.lat,
+                    lng: latLng.lng
+                }
+            }))
         } catch (err) {
             console.log(err)
         }
@@ -18,13 +34,14 @@ export default function AddressSearch({ address, setAddress }: AddressSearchProp
     
     return  <PlacesAutocomplete
             value={address}
-            onChange={setAddress}
+            onChange={handleChange}
             onSelect={fetchCoordinates}
         >
             {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
           <div>
             <input
               {...getInputProps({
+            
                 placeholder: 'My destination',
                 className: 'location-search-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm',
               })}
@@ -56,9 +73,4 @@ export default function AddressSearch({ address, setAddress }: AddressSearchProp
         
     </PlacesAutocomplete>
    
-}
-
-interface AddressSearchProps {
-    address: string
-    setAddress: (val: string) => void
 }

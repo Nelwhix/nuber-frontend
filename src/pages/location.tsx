@@ -8,7 +8,6 @@ const ClientSearch = dynamic(() => import('../components/AddressSearch'), {
   })
 
 export default function Location() {
-    const [address, setAddress] = useState("")
 
     return <Default>
         <h1 className="text-3xl font-semibold mb-4">
@@ -18,7 +17,7 @@ export default function Location() {
             <div className="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div className="bg-white px-4 py-5 sm:p-6">
                     <div>
-                        <ClientSearch address={address} setAddress={setAddress} />
+                        <ClientSearch />
                     </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">

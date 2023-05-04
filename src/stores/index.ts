@@ -7,7 +7,15 @@ export const appSlice = createSlice({
     initialState: {
         isAnimating: false,
         key: 0,
-        mobile: ""
+        mobile: "",
+        destination: {
+            name: '',
+            address: '',
+            geometry: {
+                lat: null,
+                lng: null
+            }
+        }
     },
     reducers: {
         start(state) {
@@ -20,6 +28,9 @@ export const appSlice = createSlice({
         },
         setMobile(state, action) {
             state.mobile = action.payload
+        },
+        setDestination(state, action) {
+            state.destination = action.payload
         }
     },
     extraReducers: {
@@ -31,7 +42,7 @@ export const appSlice = createSlice({
     }
 })
 
-export const { start, stop, setMobile } = appSlice.actions
+export const { start, stop, setMobile, setDestination } = appSlice.actions
 
 export const makeStore = () => configureStore({
   reducer: {
