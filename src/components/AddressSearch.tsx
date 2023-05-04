@@ -4,10 +4,10 @@ import PlacesAutocomplete, {
   } from 'react-places-autocomplete';
 import { useAppSelector, useAppDispatch, setDestination } from '@/stores';
 import { useState } from 'react';
+import { randomUUID } from 'crypto';
 
 export default function AddressSearch() {
     const [name, setName] = useState("")
-    const address = useAppSelector(state => state.appStore.destination.address)
     const dispatch = useAppDispatch()
 
    const handleChange = (value: string) => {
@@ -33,7 +33,7 @@ export default function AddressSearch() {
     }
     
     return  <PlacesAutocomplete
-            value={address}
+            value={name}
             onChange={handleChange}
             onSelect={fetchCoordinates}
         >
@@ -41,7 +41,6 @@ export default function AddressSearch() {
           <div>
             <input
               {...getInputProps({
-            
                 placeholder: 'My destination',
                 className: 'location-search-input mt-1 block w-full px-3 py-2 rounded-md border border-gray-300 shadow-sm',
               })}
@@ -61,6 +60,7 @@ export default function AddressSearch() {
                     {...getSuggestionItemProps(suggestion, {
                       className,
                       style,
+                      key: randomUUID
                     })}
                   >
                     <span>{suggestion.description}</span>

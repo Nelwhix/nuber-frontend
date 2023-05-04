@@ -1,5 +1,8 @@
+import Button from "@/components/Button";
 import Default from "@/layouts/Default";
+import { useAppSelector } from "@/stores";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 import { useState } from "react";
 
 const ClientSearch = dynamic(() => import('../components/AddressSearch'), {
@@ -8,12 +11,21 @@ const ClientSearch = dynamic(() => import('../components/AddressSearch'), {
   })
 
 export default function Location() {
+    const router = useRouter()
+    const destination = useAppSelector(state => state.appStore.destination)
+
+    const handleSelectLocation = (ev: Event) => {
+        ev.preventDefault();
+        if (destination.name === "") return
+
+        router.push('/map')
+    }
 
     return <Default>
         <h1 className="text-3xl font-semibold mb-4">
             Where are we going?
         </h1>
-        <form>
+        <form onSubmit={handleSelectLocation}>
             <div className="overflow-hidden shadow sm:rounded-md max-w-sm mx-auto text-left">
                 <div className="bg-white px-4 py-5 sm:p-6">
                     <div>
@@ -21,11 +33,7 @@ export default function Location() {
                     </div>
                 </div>
                 <div className="bg-gray-50 px-4 py-3 text-right sm:px-6">
-                    <button
-                        className="text-white inline-flex justify-center rounded-md border border-transparent bg-black py-2 px-3"
-                    >
-                        Find A Ride
-                    </button>
+                   <Button text="Find a ride"/>
                 </div>
             </div>
         </form>
